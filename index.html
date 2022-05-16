@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/World_Countriescopy_0.js"></script>
+        <script src="data/Years_spentcopy_2.js"></script>
+        <script src="data/Details_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[30.883671580283856,29.330895932639752],[49.202803363580585,66.56836713722285]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_World_Countriescopy_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIPS_CNTRY'] !== null ? autolinker.link(feature.properties['FIPS_CNTRY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GMI_CNTRY'] !== null ? autolinker.link(feature.properties['GMI_CNTRY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO_2DIGIT'] !== null ? autolinker.link(feature.properties['ISO_2DIGIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO_3DIGIT'] !== null ? autolinker.link(feature.properties['ISO_3DIGIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO_NUM'] !== null ? autolinker.link(feature.properties['ISO_NUM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CNTRY_NAME'] !== null ? autolinker.link(feature.properties['CNTRY_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONG_NAME'] !== null ? autolinker.link(feature.properties['LONG_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISOSHRTNAM'] !== null ? autolinker.link(feature.properties['ISOSHRTNAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNSHRTNAM'] !== null ? autolinker.link(feature.properties['UNSHRTNAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCSHRTNAM'] !== null ? autolinker.link(feature.properties['LOCSHRTNAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCLNGNAM'] !== null ? autolinker.link(feature.properties['LOCLNGNAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATUS'] !== null ? autolinker.link(feature.properties['STATUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POP2007'] !== null ? autolinker.link(feature.properties['POP2007'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SQKM'] !== null ? autolinker.link(feature.properties['SQKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SQMI'] !== null ? autolinker.link(feature.properties['SQMI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_SQKM'] !== null ? autolinker.link(feature.properties['LAND_SQKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COLORMAP'] !== null ? autolinker.link(feature.properties['COLORMAP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? autolinker.link(feature.properties['Shape_Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_World_Countriescopy_0_0() {
+            return {
+                pane: 'pane_World_Countriescopy_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_World_Countriescopy_0');
+        map.getPane('pane_World_Countriescopy_0').style.zIndex = 400;
+        map.getPane('pane_World_Countriescopy_0').style['mix-blend-mode'] = 'normal';
+        var layer_World_Countriescopy_0 = new L.geoJson(json_World_Countriescopy_0, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_World_Countriescopy_0',
+            layerName: 'layer_World_Countriescopy_0',
+            pane: 'pane_World_Countriescopy_0',
+            onEachFeature: pop_World_Countriescopy_0,
+            style: style_World_Countriescopy_0_0,
+        });
+        bounds_group.addLayer(layer_World_Countriescopy_0);
+        map.addLayer(layer_World_Countriescopy_0);
+        map.createPane('pane_GoogleSatellitecopy_1');
+        map.getPane('pane_GoogleSatellitecopy_1').style.zIndex = 401;
+        var layer_GoogleSatellitecopy_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellitecopy_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleSatellitecopy_1;
+        map.addLayer(layer_GoogleSatellitecopy_1);
+        function pop_Years_spentcopy_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Origin City'] !== null ? autolinker.link(feature.properties['Origin City'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? autolinker.link(feature.properties['Country'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Years'] !== null ? autolinker.link(feature.properties['Years'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                    </tr>\
+                    <tr>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Years_spentcopy_2_0(feature) {
+            if (feature.properties['Years'] >= 4.000000 && feature.properties['Years'] <= 10.000000 ) {
+                return {
+                pane: 'pane_Years_spentcopy_2',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(255,12,12,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 8.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Years'] >= 10.000000 && feature.properties['Years'] <= 100.000000 ) {
+                return {
+                pane: 'pane_Years_spentcopy_2',
+                radius: 13.33334,
+                opacity: 1,
+                color: 'rgba(255,12,12,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 8.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Years'] >= 100.000000 && feature.properties['Years'] <= 1000.000000 ) {
+                return {
+                pane: 'pane_Years_spentcopy_2',
+                radius: 16.66666,
+                opacity: 1,
+                color: 'rgba(255,12,12,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 8.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Years'] >= 1000.000000 && feature.properties['Years'] <= 10000.000000 ) {
+                return {
+                pane: 'pane_Years_spentcopy_2',
+                radius: 20.0,
+                opacity: 1,
+                color: 'rgba(255,12,12,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 8.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Years_spentcopy_2');
+        map.getPane('pane_Years_spentcopy_2').style.zIndex = 402;
+        map.getPane('pane_Years_spentcopy_2').style['mix-blend-mode'] = 'normal';
+        var layer_Years_spentcopy_2 = new L.geoJson(json_Years_spentcopy_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Years_spentcopy_2',
+            layerName: 'layer_Years_spentcopy_2',
+            pane: 'pane_Years_spentcopy_2',
+            onEachFeature: pop_Years_spentcopy_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Years_spentcopy_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Years_spentcopy_2);
+        map.addLayer(layer_Years_spentcopy_2);
+        function pop_Details_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Origin City</th>\
+                        <td>' + (feature.properties['Origin City'] !== null ? autolinker.link(feature.properties['Origin City'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Country</th>\
+                        <td>' + (feature.properties['Country'] !== null ? autolinker.link(feature.properties['Country'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Years spent</th>\
+                        <td>' + (feature.properties['Years'] !== null ? autolinker.link(feature.properties['Years'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                    </tr>\
+                    <tr>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year arrived</th>\
+                        <td>' + (feature.properties['Year arrived'] !== null ? autolinker.link(feature.properties['Year arrived'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year left</th>\
+                        <td>' + (feature.properties['Year left'] !== null ? autolinker.link(feature.properties['Year left'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Reason for departure</th>\
+                        <td>' + (feature.properties['Reason for departure'] !== null ? autolinker.link(feature.properties['Reason for departure'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Details_3_0() {
+            return {
+                pane: 'pane_Details_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Details_3');
+        map.getPane('pane_Details_3').style.zIndex = 403;
+        map.getPane('pane_Details_3').style['mix-blend-mode'] = 'normal';
+        var layer_Details_3 = new L.geoJson(json_Details_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Details_3',
+            layerName: 'layer_Details_3',
+            pane: 'pane_Details_3',
+            onEachFeature: pop_Details_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Details_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Details_3);
+        map.addLayer(layer_Details_3);
+        setBounds();
+        </script>
+    </body>
+</html>
